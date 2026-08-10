@@ -1,0 +1,16 @@
+# Used only by the integration-test job.
+# Gives every buildable service an explicit image name so that
+# `docker compose up --no-build` reuses the images produced by build-images
+# (the exact artifacts that get scanned and pushed) instead of rebuilding them.
+services:
+  jobs-service:
+    image: jobboard-jobs-service:ci
+
+  applications-service:
+    image: jobboard-applications-service:ci
+
+  frontend:
+    image: jobboard-frontend:ci
+
+  nginx:
+    image: jobboard-nginx:ci

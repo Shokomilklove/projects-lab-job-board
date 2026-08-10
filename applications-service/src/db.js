@@ -1,11 +1,21 @@
 'use strict';
-
+const fs = require('fs');
 const { Pool } = require('pg');
 
+const POSTGRES_DB = process.env.POSTGRES_DB || 'jobboard';
+const POSTGRES_USER = process.env.POSTGRES_USER || 'postgres';
+const POSTGRES_PASSWORD_FILE = '/run/secrets/db_password';
+
+const POSTGRES_PASSWORD = fs
+  .readFileSync(POSTGRES_PASSWORD_FILE, 'utf8')
+  .trim();
+  
+const DATABASE_URL = 
+  `postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}`;
+  
+
 const pool = new Pool({
-  connectionString:
-    process.env.DATABASE_URL ||
-    'postgresql://postgres:jobboard123@localhost:5432/jobboard',
+  connectionString: DATABASE_URL,
   max: 10,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 5000,
