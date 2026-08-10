@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker, DeclarativeBase
 
 POSTGRES_DB = os.getenv("POSTGRES_DB", "jobboard")
 POSTGRES_USER = os.getenv("POSTGRES_USER", "postgres")
-POSTGRES_PASSWORD_FILE = os.getenv("POSTGRES_PASSWORD_FILE","/run/secrets/db_password")
+POSTGRES_PASSWORD_FILE = os.getenv("POSTGRES_PASSWORD_FILE", "/run/secrets/db_password")
 
 POSTGRES_PASSWORD = Path(POSTGRES_PASSWORD_FILE).read_text().strip()
 
