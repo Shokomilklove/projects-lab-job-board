@@ -14,7 +14,9 @@
     "express": "^4.19.2",
     "pg": "^8.11.5",
     "uuid": "^9.0.1",
-    "eslint": "^8.57.1"
+    "eslint": "^8.57.1",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/praser": "^8.0.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
