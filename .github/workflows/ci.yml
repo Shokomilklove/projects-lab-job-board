@@ -263,7 +263,7 @@ jobs:
           EOF
 
       - name: Start the stack (pre-built images, no rebuild)
-        run: docker compose -f docker-compose.yml -f docker-compose.ci.yml up -d --no-build
+        run: docker compose -f docker-compose.yml up -d --no-build
 
       - name: Wait for containers to become healthy
         run: |
