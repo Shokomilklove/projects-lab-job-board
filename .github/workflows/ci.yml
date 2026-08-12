@@ -177,7 +177,7 @@ jobs:
       - name: Trivy scan — table output in the log
         uses: aquasecurity/trivy-action@0.35.0
         with:
-          scan-type: fs
+          scan-type: image
           scan-ref: .
           image-ref: jobboard-${{ matrix.service }}:${{ env.IMAGE_TAG }}
           format: table
@@ -189,7 +189,7 @@ jobs:
       - name: Trivy scan — JSON report
         uses: aquasecurity/trivy-action@0.35.0
         with:
-          scan-type: fs
+          scan-type: image
           scan-ref: .
           image-ref: jobboard-${{ matrix.service }}:${{ env.IMAGE_TAG }}
           format: json
@@ -200,7 +200,7 @@ jobs:
       - name: Trivy scan — SARIF (GitHub Security tab)
         uses: aquasecurity/trivy-action@0.35.0
         with:
-          scan-type: fs
+          scan-type: image
           scan-ref: .
           image-ref: jobboard-${{ matrix.service }}:${{ env.IMAGE_TAG }}
           format: sarif
