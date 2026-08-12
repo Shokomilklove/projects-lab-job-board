@@ -26,7 +26,7 @@ assert_status() {
 
 echo "==> Waiting for the stack at $BASE_URL"
 for i in $(seq 1 60); do
-  if curl -fsS "$BASE_URL/api/jobs/" >/dev/null 2>&1; then
+  if curl -fsS "$BASE_URL/api/jobs" >/dev/null 2>&1; then
     echo "    stack is up after $((i * 5))s"
     break
   fi
@@ -42,25 +42,25 @@ assert_status "GET /" '^200$' "$BASE_URL/"
 
 echo
 echo "==> 2. Jobs service"
-assert_status "GET /api/jobs/" '^200$' "$BASE_URL/api/jobs/"
+assert_status "GET /api/jobs" '^200$' "$BASE_URL/api/jobs"
 if jq -e 'type == "array"' /tmp/body.json >/dev/null 2>&1; then
   COUNT=$(jq 'length' /tmp/body.json)
-  pass "GET /api/jobs/ returned a JSON array ($COUNT jobs)"
+  pass "GET /api/jobs returned a JSON array ($COUNT jobs)"
   [ "$COUNT" -ge 1 ] && pass "seed data present" || fail "no seeded jobs found"
 else
-  fail "GET /api/jobs/ did not return a JSON array"
+  fail "GET /api/jobs did not return a JSON array"
 fi
 
 echo
 echo "==> 3. Create a job"
-JOB=$(curl -s -X POST "$BASE_URL/api/jobs/" \
+JOB=$(curl -s -X POST "$BASE_URL/api/jobs" \
   -H 'Content-Type: application/json' \
   -d '{"title":"CI Smoke Test Engineer","description":"Created by GitHub Actions","company":"Pipeline Inc","location":"Remote","salary_range":"$1-$2"}')
 JOB_ID=$(echo "$JOB" | jq -r '.id // empty')
 if [ -n "$JOB_ID" ]; then
-  pass "POST /api/jobs/ created job id=$JOB_ID"
+  pass "POST /api/jobs created job id=$JOB_ID"
 else
-  fail "POST /api/jobs/ did not return an id"; echo "$JOB" | head -c 400; echo
+  fail "POST /api/jobs did not return an id"; echo "$JOB" | head -c 400; echo
 fi
 
 echo
@@ -75,8 +75,8 @@ fi
 
 echo
 echo "==> 5. Validation and 404 behaviour"
-assert_status "POST /api/jobs/ with missing fields -> 422" '^422$' \
-  -X POST "$BASE_URL/api/jobs/" -H 'Content-Type: application/json' -d '{"title":"only a title"}'
+assert_status "POST /api/jobs with missing fields -> 422" '^422$' \
+  -X POST "$BASE_URL/api/jobs" -H 'Content-Type: application/json' -d '{"title":"only a title"}'
 assert_status "GET /api/jobs/999999 -> 404" '^404$' "$BASE_URL/api/jobs/999999"
 
 echo
