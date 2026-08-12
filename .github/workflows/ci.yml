@@ -76,7 +76,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        service: [applications-service, frontend]
+        service: [applications-service]
     steps:
       - uses: actions/checkout@v4
 

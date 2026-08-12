@@ -1,0 +1,14 @@
+trivy image projects-lab-job-board-nginx:latest
+ 
+
+
+Report Summary
+
+┌─────────────────────────────────────────────────────┬────────┬─────────────────┬─────────┐
+│                       Target                        │  Type  │ Vulnerabilities │ Secrets │
+├─────────────────────────────────────────────────────┼────────┼─────────────────┼─────────┤
+│ projects-lab-job-board-nginx:latest (alpine 3.21.3) │ alpine │        0        │    -    │
+└─────────────────────────────────────────────────────┴────────┴─────────────────┴─────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)

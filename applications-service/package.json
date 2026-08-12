@@ -13,12 +13,10 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "pg": "^8.11.5",
-    "uuid": "^9.0.1",
-    "eslint": "^8.57.1",
-    "@typescript-eslint/eslint-plugin": "^8.0.0",
-    "@typescript-eslint/praser": "^8.0.0"
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "eslint": "^10.8.1",
     "nodemon": "^3.1.0"
   }
 }
