@@ -1,7 +1,7 @@
 import uuid
 from typing import List
 
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import FastAPI, Depends, HTTPException, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
@@ -27,6 +27,24 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.middleware("http")
+async def strip_trailing_slash(request: Request, call_next):
+    """Serve trailing-slash paths directly instead of redirecting.
+
+    FastAPI would otherwise answer e.g. ``/jobs/`` with a 307 redirect to
+    ``/jobs``. Behind the nginx reverse proxy the ``/api`` prefix has already
+    been stripped, so that redirect points at ``/jobs`` — which no longer
+    matches the ``/api/jobs`` proxy rule and bounces the caller to the
+    frontend home page. Normalising the path here keeps the request on this
+    service and returns the resource with a 200.
+    """
+    path = request.scope["path"]
+    if len(path) > 1 and path.endswith("/"):
+        request.scope["path"] = path.rstrip("/")
+
+    return await call_next(request)
 
 
 @app.get("/health", tags=["Health"])

@@ -43,6 +43,9 @@ assert_status "GET /" '^200$' "$BASE_URL/"
 echo
 echo "==> 2. Jobs service"
 assert_status "GET /api/jobs" '^200$' "$BASE_URL/api/jobs"
+# A trailing slash must be served in place (200), not answered with a 307
+# that drops the /api prefix and bounces the caller to the frontend.
+assert_status "GET /api/jobs/ (trailing slash)" '^200$' "$BASE_URL/api/jobs/"
 if jq -e 'type == "array"' /tmp/body.json >/dev/null 2>&1; then
   COUNT=$(jq 'length' /tmp/body.json)
   pass "GET /api/jobs returned a JSON array ($COUNT jobs)"

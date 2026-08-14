@@ -97,3 +97,12 @@ def test_get_nonexistent_job(client):
     response = client.get("/jobs/non-existent-id")
 
     assert response.status_code == 404
+
+
+def test_trailing_slash_served_without_redirect(client):
+    # A trailing slash must be handled in place (200), not answered with a
+    # 307 redirect that would drop the /api prefix behind the proxy.
+    response = client.get("/jobs/", follow_redirects=False)
+
+    assert response.status_code == 200
+    assert isinstance(response.json(), list)
