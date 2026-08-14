@@ -1,10 +1,33 @@
 1.1 
+How many CRITICAL CVEs did you find in total across all images?
 
+1. Critical CVEs
+A total of 5 Critical CVEs were found:
+frontend — 0
+job-board-nginx — 0
+applications-service — 1 (CVE-2026-59873, tar)
+jobs-service — 4 (perl-base)
+2. Image with the Most Vulnerabilities
+jobs-service — 192 vulnerabilities:
+4 Critical
+22 High
+68 Medium
+68 Low/Unknown
+applications-service has 28, while frontend and nginx have 0.
 
+Which image has the most vulnerabilities?
 
+jobs-service uses Debian 13.6, which contains more system packages and therefore more vulnerabilities than the Alpine-based images. A slim, distroless, or Alpine base image could be considered.
 
+Pick one CRITICAL CVE and explain: (a) what it is, (b) which package it affects, (c) what the fix/mitigation is.
 
-
+Example Critical CVE — CVE-2026-13221
+The affected package is perl-base 5.40.1-6. The vulnerability is an integer overflow related to processing very large regular expressions.
+With more than 65,535 alternatives, a regular expression may behave incorrectly without producing an error, which could be dangerous if it is used for security checks.
+Mitigation: update perl-base and avoid constructing extremely large regular expressions.
+Other CVEs in the same package cluster:
+CVE-2026-42496 — path traversal;
+CVE-2026-57433 — integer overflow.
 
 1.2
 #### Before
@@ -165,6 +188,4 @@ The request is forwarded to the applications-service container on port 3001.
 How the response travels back to the browser
 
 The response travels from applications-service:3001 back to Nginx, which then forwards the HTTP response to the browser.
-
-
 
