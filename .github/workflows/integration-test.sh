@@ -89,7 +89,7 @@ assert_status "GET /api/applications/" '^200$' "$BASE_URL/api/applications/"
 if [ -n "$JOB_ID" ]; then
   APP=$(curl -s -X POST "$BASE_URL/api/applications/" \
     -H 'Content-Type: application/json' \
-    -d "{\"job_id\":$JOB_ID,\"applicant_name\":\"CI Bot\",\"applicant_email\":\"ci@example.com\",\"cover_letter\":\"Automated integration test.\"}")
+    -d "{\"job_id\":\"$JOB_ID\",\"applicant_name\":\"CI Bot\",\"applicant_email\":\"ci@example.com\",\"cover_letter\":\"Automated integration test.\"}")
   APP_ID=$(echo "$APP" | jq -r '.id // empty')
   if [ -n "$APP_ID" ]; then
     pass "POST /api/applications/ created application id=$APP_ID"
